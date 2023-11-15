@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <BorderPane styleClass="padre" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProductosController">
    <top>
@@ -30,14 +30,13 @@
       </MenuBar>
    </top>
    <center>
-      <GridPane prefHeight="757.0" prefWidth="805.0" BorderPane.alignment="CENTER">
+      <GridPane alignment="TOP_CENTER" prefHeight="757.0" prefWidth="805.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.6366578028832" minWidth="10.0" prefWidth="194.54510506850818" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="537.7284546778832" minWidth="10.0" prefWidth="428.18342330136386" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="182.72790536147693" minWidth="10.0" prefWidth="182.72790536147693" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
@@ -47,57 +46,59 @@
           <RowConstraints maxHeight="418.0" minHeight="10.0" prefHeight="296.5463625415935" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="PRODUCTOS" textAlignment="CENTER" GridPane.columnSpan="3" GridPane.halignment="CENTER">
-               <font>
-                  <Font size="25.0" />
-               </font>
-            </Label>
-            <TableView fx:id="tvProductos" prefHeight="329.0" prefWidth="805.0" GridPane.columnSpan="3" GridPane.rowIndex="7">
+            <TableView fx:id="tvProductos" prefHeight="282.0" prefWidth="593.0" GridPane.columnSpan="3" GridPane.rowIndex="6">
               <columns>
                 <TableColumn fx:id="tcCodigo" prefWidth="135.45505106449127" text="CÓDIGO" />
-                <TableColumn fx:id="tcNombre" prefWidth="274.54649353027344" text="NOMBRE" />
-                  <TableColumn fx:id="tcPrecio" minWidth="0.0" prefWidth="207.27349853515625" text="PRECIO" />
-                  <TableColumn fx:id="tcDisponinbe" minWidth="0.0" prefWidth="190.9097900390625" text="DISPONIBLE" />
+                <TableColumn fx:id="tcNombre" prefWidth="208.18260192871094" text="NOMBRE" />
+                  <TableColumn fx:id="tcPrecio" minWidth="0.0" prefWidth="230.90997314453125" text="PRECIO" />
+                  <TableColumn fx:id="tcDisponinbe" minWidth="0.0" prefWidth="171.81884765625" text="DISPONIBLE" />
               </columns>
             </TableView>
-            <Label text="Código del producto:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <Label text="Código del producto:" GridPane.halignment="RIGHT">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Nombre:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label text="Nombre:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <Label text="Precio" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <Label text="Precio" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="tfCodigo" maxWidth="-Infinity" prefHeight="25.0" prefWidth="141.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tfNombre" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="tfPrecio" maxWidth="-Infinity" prefWidth="141.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <CheckBox fx:id="cbDisponible" mnemonicParsing="false" text="Disponible" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <FlowPane alignment="CENTER" hgap="100.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+            <TextField fx:id="tfCodigo" maxWidth="-Infinity" prefHeight="25.0" prefWidth="141.0" GridPane.columnIndex="1" />
+            <TextField fx:id="tfNombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfPrecio" maxWidth="-Infinity" prefWidth="141.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <CheckBox fx:id="cbDisponible" mnemonicParsing="false" text="Disponible" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <FlowPane alignment="CENTER" hgap="100.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <children>
                   <Button fx:id="btnCrear" mnemonicParsing="false" onAction="#crear" text="Crear" />
                   <Button fx:id="btnActualizar" mnemonicParsing="false" onAction="#actualizar" text="Actualizar" />
                   <Button fx:id="btnLimpiar" mnemonicParsing="false" onAction="#limpiar" text="Limpiar" />
                </children>
             </FlowPane>
-            <Label text="Imagen:" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+            <Label text="Imagen:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
                <padding>
                   <Insets right="10.0" />
                </padding>
             </Label>
-            <FlowPane hgap="50.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <FlowPane hgap="50.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <Button fx:id="btnSubirImagen" mnemonicParsing="false" onAction="#subirImagen" text="Seleccionar imagen..." />
+                  <Button fx:id="btnSubirImagen" mnemonicParsing="false" onAction="#subirImagen" text="Seleccionar imagen...">
+                     <graphic>
+                        <FontIcon iconLiteral="far-file-image" />
+                     </graphic>
+                  </Button>
                   <ImageView fx:id="ivImagen" fitHeight="68.0" fitWidth="82.0" pickOnBounds="true" preserveRatio="true" />
                </children>
             </FlowPane>
          </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" />
+         </padding>
       </GridPane>
    </center>
 </BorderPane>
