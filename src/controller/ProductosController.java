@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import dao.DAOProducto;
 import excepciones.OlimpiadasException;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -224,19 +225,45 @@ public class ProductosController implements Initializable {
         	}
         });
         
-        tvProductos.setOnMouseClicked(e -> {
-        	Producto producto = tvProductos.getSelectionModel().getSelectedItem();
-        	if (producto != null) {
-        		btnCrear.setDisable(true);
-        		btnActualizar.setDisable(false);
-        		tfCodigo.setDisable(true);
-        		rellenarEditor(producto);
-        	} else {
-        		btnCrear.setDisable(false);
-        		btnActualizar.setDisable(true);
-        		tfCodigo.setDisable(false);
-        		limpiarFormulario();
-        	}
+        tvProductos.getItems().addListener(new ListChangeListener<Producto>() {
+
+			@Override
+			public void onChanged(Change<? extends Producto> p) {
+				Producto producto = tvProductos.getSelectionModel().getSelectedItem();
+				
+				if (producto != null) {
+					btnCrear.setDisable(true);
+					btnActualizar.setDisable(false);
+					tfCodigo.setDisable(true);
+					rellenarEditor(producto);
+				} else {
+					btnCrear.setDisable(false);
+					btnActualizar.setDisable(true);
+					tfCodigo.setDisable(false);
+					limpiarFormulario();
+				}				
+			}
+        	
+        });
+        
+        tvProductos.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Producto>() {
+
+			@Override
+			public void onChanged(Change<? extends Producto> c) {
+	        	Producto producto = tvProductos.getSelectionModel().getSelectedItem();
+	        	if (producto != null) {
+	        		btnCrear.setDisable(true);
+	        		btnActualizar.setDisable(false);
+	        		tfCodigo.setDisable(true);
+	        		rellenarEditor(producto);
+	        	} else {
+	        		btnCrear.setDisable(false);
+	        		btnActualizar.setDisable(true);
+	        		tfCodigo.setDisable(false);
+	        		limpiarFormulario();
+	        	}
+			}
+        	
         });
         
         MenuItem miVerImagen = new MenuItem("Ver Imagen");
