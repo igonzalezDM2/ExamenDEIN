@@ -36,55 +36,107 @@ import model.Producto;
 import utilities.StringUtils;
 import utilities.Utilidades;
 
+/**
+ * Controlador para la gestión de productos.
+ */
 public class ProductosController implements Initializable {
 	
 	byte[] imgSeleccionada;
 
+    /**
+     * Botón para actualizar un producto.
+     */
     @FXML
     private Button btnActualizar;
 
+    /**
+     * Botón para crear un nuevo producto.
+     */
     @FXML
     private Button btnCrear;
 
+    /**
+     * Botón para limpiar el formulario de producto.
+     */
     @FXML
     private Button btnLimpiar;
     
+    /**
+     * Botón para subir una imagen para el producto.
+     */
     @FXML
     private Button btnSubirImagen;
 
+    /**
+     * Checkbox para indicar si el producto está disponible.
+     */
     @FXML
     private CheckBox cbDisponible;
 
+    /**
+     * Vista de imagen para mostrar la imagen del producto.
+     */
     @FXML
     private ImageView ivImagen;
     
+    /**
+     * Menú de información.
+     */
     @FXML
     private MenuItem miInfo;
 
+    /**
+     * Columna de código de producto en la tabla de productos.
+     */
     @FXML
     private TableColumn<Producto, String> tcCodigo;
 
+    /**
+     * Columna de disponibilidad de producto en la tabla de productos.
+     */
     @FXML
     private TableColumn<Producto, Boolean> tcDisponinbe;
 
+    /**
+     * Columna de nombre de producto en la tabla de productos.
+     */
     @FXML
     private TableColumn<Producto, String> tcNombre;
 
+    /**
+     * Columna de precio de producto en la tabla de productos.
+     */
     @FXML
     private TableColumn<Producto, Double> tcPrecio;
 
+    /**
+     * Campo de texto para el código de producto.
+     */
     @FXML
     private TextField tfCodigo;
 
+    /**
+     * Campo de texto para el nombre de producto.
+     */
     @FXML
     private TextField tfNombre;
 
+    /**
+     * Campo de texto para el precio de producto.
+     */
     @FXML
     private TextField tfPrecio;
 
+    /**
+     * Tabla de vista de productos.
+     */
     @FXML
     private TableView<Producto> tvProductos;
     
+    /**
+     * Método para actualizar un producto.
+     * @param event Evento de acción.
+     */
     @FXML
     void actualizar(ActionEvent event) {
     	Producto seleccionado = tvProductos.getSelectionModel().getSelectedItem();
@@ -104,6 +156,10 @@ public class ProductosController implements Initializable {
     	}
     }
 
+    /**
+     * Método para crear un nuevo producto.
+     * @param event Evento de acción.
+     */
     @FXML
     void crear(ActionEvent event) {
     	if (validarFormulario()) {    		
@@ -118,11 +174,19 @@ public class ProductosController implements Initializable {
     	}
     }
 
+    /**
+     * Método para limpiar el formulario de producto.
+     * @param event Evento de acción.
+     */
     @FXML
     void limpiar(ActionEvent event) {
     	limpiarFormulario();
     }
     
+    /**
+     * Método para subir una imagen para el producto.
+     * @param event Evento de acción.
+     */
     @FXML
     void subirImagen(ActionEvent event) {
     	try {
@@ -136,11 +200,18 @@ public class ProductosController implements Initializable {
 		}
     }
     
+    /**
+     * Método para mostrar información sobre la aplicación.
+     * @param event Evento de acción.
+     */
     @FXML
     void acercade(ActionEvent event) {
     	mostrarInfo("Gestión de productos 1.0\nAutor: don Iker González Díaz");
     }
     
+    /**
+     * Método para actualizar la tabla de productos.
+     */
     private void actualizarTabla() {
     	try {
     		tvProductos.getItems().clear();
@@ -151,6 +222,10 @@ public class ProductosController implements Initializable {
 		}
     }
     
+    /**
+     * Método para validar el formulario de producto.
+     * @return Verdadero si el formulario es válido, falso en caso contrario.
+     */
     private boolean validarFormulario() {
     	StringBuilder errores = new StringBuilder();
     	errores.append(checkCampoStrNotNullStr(tfCodigo) + "\n");
@@ -170,6 +245,11 @@ public class ProductosController implements Initializable {
     	return true;
     }
     
+    /**
+     * Método para construir un producto a partir de los datos del formulario.
+     * @return Producto construido.
+     * @throws ProductosException Si hay un error al construir el producto.
+     */
     private Producto construirProducto() throws ProductosException {
     	return new Producto()
     			.setCodigo(StringUtils.trimToEmpty(tfCodigo.getText()))
@@ -179,6 +259,10 @@ public class ProductosController implements Initializable {
     			.setImagen(imgSeleccionada);
     }
     
+    /**
+     * Método para rellenar el formulario de producto con los datos de un producto.
+     * @param producto Producto a partir del cual se rellenará el formulario.
+     */
     private void rellenarEditor(Producto producto) {
     	try {
     		tfCodigo.setText(producto.getCodigo());
@@ -192,6 +276,9 @@ public class ProductosController implements Initializable {
 		}
     }
     
+    /**
+     * Método para limpiar el formulario de producto.
+     */
     private void limpiarFormulario() {
     	this.imgSeleccionada = null;
     	tfCodigo.clear();
@@ -205,6 +292,11 @@ public class ProductosController implements Initializable {
     	tvProductos.getSelectionModel().clearSelection();
     }
 
+	/**
+	 * Método para inicializar el controlador.
+	 * @param location Ubicación utilizada para resolver rutas relativas para el objeto raíz.
+	 * @param resources Recursos utilizados para localizar el objeto raíz.
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
