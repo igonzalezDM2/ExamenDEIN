@@ -159,6 +159,16 @@ public class Utilidades {
 		}
 	}
 
+	public static String checkCampoDoubleStr(TextField tf) {
+		String strNum = tf.getText();
+		Pattern doublePattern = Pattern.compile("\\d+([\\.,]\\d+)?");
+		Matcher matcher = doublePattern.matcher(strNum);
+		if (!matcher.matches()) {
+			return "El campo " + tf.getId() + " contiene un formato incorrecto o está vacío";
+		}
+		return "";
+	}
+
 	/**
 	 * Verifica que el contenido de un TextField sea un número entero válido.
 	 * 
@@ -187,6 +197,15 @@ public class Utilidades {
 		}
 	}
 	
+	public static String checkCampoStrNotNullStr(TextField tf) {
+		String str = tf.getText();
+		if (str == null || str.isBlank()) {
+			return "El campo" + tf.getId() + " está vacío";
+		}
+		return "";
+	}
+	
+	
 	/**
 	 * Comprueba que no sobrepase un máximo de caracteres; no salta excepción si es nulo o vacío
 	 * @param tf
@@ -200,6 +219,16 @@ public class Utilidades {
 				throw new OlimpiadasException("El campo" + tf.getId() + " está tiene más de " + maxLength + " caracteres");
 			}
 		}
+	}
+
+	public static String checkCampoStrMaxLengthStr(TextField tf, int maxLength) {
+		String str = StringUtils.trimToEmpty(tf.getText());
+		if (str != null && !str.isBlank()) {
+			if (tf.getText().length() > maxLength) {
+				return "El campo" + tf.getId() + " tiene más de " + maxLength + " caracteres";
+			}
+		}
+		return "";
 	}
 	
 	/**
@@ -215,6 +244,16 @@ public class Utilidades {
 				throw new OlimpiadasException("El campo" + tf.getId() + " está tiene más de " + minLength + " caracteres");
 			}
 		}
+	}
+
+	public static String checkCampoStrMinLengthStr(TextField tf, int minLength) {
+		String str = StringUtils.trimToEmpty(tf.getText());
+		if (str != null && !str.isBlank()) {
+			if (tf.getText().length() < minLength) {
+				return "El campo" + tf.getId() + " está tiene más de " + minLength + " caracteres";
+			}
+		}
+		return "";
 	}
 	
 	/**
@@ -235,6 +274,8 @@ public class Utilidades {
 	 */
 	public static void mostrarInfo(String info) {
 		Alert alert = new Alert(AlertType.INFORMATION, info, ButtonType.OK);
+		alert.setTitle("INFO");
+		alert.setHeaderText("");
 		alert.show();
 	}
 	
@@ -306,11 +347,13 @@ public class Utilidades {
     	fc.setInitialDirectory(new File(System.getProperty("user.home")));
     	fc.setSelectedExtensionFilter(new ExtensionFilter("Imágenes JPG o PNG", "*.jpg", "*.png"));
     	File fichero = fc.showOpenDialog(ventana);
-    	try (FileInputStream fis = new FileInputStream(fichero)) {
-    		return fis.readAllBytes();
-    	} catch (IOException e) {
-    		lanzarError(e);
-		}
+    	if (fichero != null) {    		
+    		try (FileInputStream fis = new FileInputStream(fichero)) {
+    			return fis.readAllBytes();
+    		} catch (IOException e) {
+    			lanzarError(e);
+    		}
+    	}
     	return null;
     }
 	
