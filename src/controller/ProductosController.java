@@ -216,15 +216,6 @@ public class ProductosController implements Initializable {
         tcDisponinbe.setCellFactory(tc -> new CheckBoxTableCell<Producto, Boolean>());
         tcDisponinbe.setCellValueFactory(f -> new SimpleBooleanProperty(f.getValue().isDisponible()));
         
-        ivImagen.setOnMouseClicked(e -> {
-        	Producto producto = tvProductos.getSelectionModel().getSelectedItem();
-        	
-        	if (producto != null && producto.getImagen() != null) {
-        			Utilidades.mostrarImagen(producto.getImagen(), 0, 0);
-        		
-        	}
-        });
-        
         tvProductos.getItems().addListener(new ListChangeListener<Producto>() {
 
 			@Override
@@ -272,7 +263,7 @@ public class ProductosController implements Initializable {
         miVerImagen.setOnAction(e -> {
         	Producto producto = tvProductos.getSelectionModel().getSelectedItem();
         	if (producto != null && producto.getImagen() != null) {        		
-        		mostrarImagen(producto.getImagen(), 300, 300);
+        		mostrarImagen(producto.getImagen(), 300, 300, "Imagen");
         	}
         });
         
@@ -290,6 +281,22 @@ public class ProductosController implements Initializable {
         });
         
         ContextMenu cm = new ContextMenu(miVerImagen, miEliminar);
+        
+        //HAGO VISIBLES LOS BOTONES SEGÚN DISPONIBILIDAD
+        cm.setOnShowing(e -> {
+        	Producto producto = tvProductos.getSelectionModel().getSelectedItem();
+        	if (producto != null) {
+        		miEliminar.setVisible(true);
+        		miVerImagen.setVisible(producto.getImagen() != null);
+        		
+        	} else {
+        		miEliminar.setVisible(false);
+        		miVerImagen.setVisible(false);
+        	}
+        	
+        });
+        
+        
         tvProductos.setContextMenu(cm);
         
         

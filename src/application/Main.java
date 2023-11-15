@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -26,8 +27,11 @@ public class Main extends Application {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("/fxml/Productos.fxml"));
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("/style/estilos.css").toExternalForm());
-			primaryStage.setTitle("PRODUCTOS");
+			primaryStage.setTitle("INFO");
 			primaryStage.setScene(scene);
+			
+			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/images/carrito.png")));
+			
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

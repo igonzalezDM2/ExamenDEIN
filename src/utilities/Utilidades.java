@@ -360,6 +360,10 @@ public class Utilidades {
     
     
     public static void mostrarImagen(byte[] imagen, int width, int height) {
+    	mostrarImagen(imagen, width, height, null);
+    }
+    
+    public static void mostrarImagen(byte[] imagen, int width, int height, String titulo) {
     	
     	int defaultWidth = 400;
     	int defaultHeight = 400;
@@ -381,6 +385,9 @@ public class Utilidades {
 				iv.prefHeight(defHeight);
 				imgRoot.setCenter(iv);
 				Stage stage = new Stage();
+				if (!StringUtils.isBlank(titulo)) {
+					stage.setTitle(titulo);
+				}
 				stage.setResizable(false);
 				stage.initModality(Modality.WINDOW_MODAL);
 				Scene scene = new Scene(imgRoot,defWidth,defHeight);
