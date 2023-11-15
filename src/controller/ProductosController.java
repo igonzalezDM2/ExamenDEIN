@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import dao.DAOProducto;
-import excepciones.OlimpiadasException;
+import excepciones.ProductosException;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -89,7 +89,7 @@ public class ProductosController implements Initializable {
     void actualizar(ActionEvent event) {
     	Producto seleccionado = tvProductos.getSelectionModel().getSelectedItem();
     	if (seleccionado.getImagen() != null && this.imgSeleccionada == null) {
-    		lanzarError(new OlimpiadasException("Si tenía una imagen, no puede dejarla en blanco"));
+    		lanzarError(new ProductosException("Si tenía una imagen, no puede dejarla en blanco"));
     		return;
     	}
     	if (validarFormulario()) {
@@ -98,7 +98,7 @@ public class ProductosController implements Initializable {
     			DAOProducto.modificarProducto(producto);
     			limpiarFormulario();
     			actualizarTabla();
-    		} catch (OlimpiadasException | SQLException e) {
+    		} catch (ProductosException | SQLException e) {
     			lanzarError(e);
     		}
     	}
@@ -112,7 +112,7 @@ public class ProductosController implements Initializable {
     			DAOProducto.anadirProducto(producto);
     			limpiarFormulario();
     			actualizarTabla();
-    		} catch (OlimpiadasException | SQLException e) {
+    		} catch (ProductosException | SQLException e) {
     			lanzarError(e);
     		}
     	}
@@ -131,7 +131,7 @@ public class ProductosController implements Initializable {
     		if (this.imgSeleccionada != null) {    			
     			ivImagen.setImage(Utilidades.byte2Image(imgSeleccionada));
     		}
-		} catch (OlimpiadasException e) {
+		} catch (ProductosException e) {
 			lanzarError(e);
 		}
     }
@@ -146,7 +146,7 @@ public class ProductosController implements Initializable {
     		tvProductos.getItems().clear();
 			tvProductos.getItems().addAll(DAOProducto.getProductos());
 			tvProductos.refresh();
-		} catch (OlimpiadasException e) {
+		} catch (ProductosException e) {
 			lanzarError(e);
 		}
     }
@@ -164,13 +164,13 @@ public class ProductosController implements Initializable {
     	errores.append(checkCampoDoubleStr(tfPrecio) + "\n");
     	
     	if (!StringUtils.isBlank(errores.toString())) {
-    		lanzarError(new OlimpiadasException(errores.toString()));
+    		lanzarError(new ProductosException(errores.toString()));
     		return false;
     	}
     	return true;
     }
     
-    private Producto construirProducto() throws OlimpiadasException {
+    private Producto construirProducto() throws ProductosException {
     	return new Producto()
     			.setCodigo(StringUtils.trimToEmpty(tfCodigo.getText()))
     			.setNombre(StringUtils.trimToEmpty(tfNombre.getText()))
@@ -187,7 +187,7 @@ public class ProductosController implements Initializable {
     		cbDisponible.setSelected(producto.isDisponible());
     		this.imgSeleccionada = producto.getImagen();
 			ivImagen.setImage(Utilidades.byte2Image(imgSeleccionada));
-		} catch (OlimpiadasException e) {
+		} catch (ProductosException e) {
 			lanzarError(e);
 		}
     }
@@ -275,7 +275,7 @@ public class ProductosController implements Initializable {
             		limpiarFormulario();
             		actualizarTabla();
             	}
-        	} catch (OlimpiadasException | SQLException ex) {
+        	} catch (ProductosException | SQLException ex) {
         		lanzarError(ex);
         	}
         });

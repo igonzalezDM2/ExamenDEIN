@@ -8,15 +8,24 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
-import excepciones.OlimpiadasException;
+import excepciones.ProductosException;
 import model.Producto;
 import utilities.StringUtils;
 
 
+/**
+ * Esta clase proporciona métodos para interactuar con la tabla de productos en la base de datos.
+ */
 public class DAOProducto extends DAOBase {
 	
 	private static final String TABLA = "productos";
 	
+	/**
+	 * Este método mapea un ResultSet a un objeto Producto.
+	 * @param rs el ResultSet a mapear
+	 * @return un objeto Producto
+	 * @throws SQLException si ocurre un error al acceder a los datos
+	 */
 	public static Producto mapProducto(ResultSet rs) throws SQLException {
 		return new Producto()
 				.setCodigo(rs.getString("codigo"))
@@ -26,7 +35,12 @@ public class DAOProducto extends DAOBase {
 				.setPrecio(rs.getDouble("precio"));
 	}
 	
-	public static List<Producto> getProductos() throws OlimpiadasException {
+	/**
+	 * Este método devuelve una lista de todos los productos en la base de datos.
+	 * @return una lista de objetos Producto
+	 * @throws ProductosException si ocurre un error al recuperar los productos
+	 */
+	public static List<Producto> getProductos() throws ProductosException {
 		List<Producto> productos = new LinkedList<>();
 		try (Connection con = getConexion()) {
 			Statement st = con.createStatement();
@@ -35,12 +49,18 @@ public class DAOProducto extends DAOBase {
 					productos.add(mapProducto(rs));
 				}
 		} catch (SQLException e) {
-			throw new OlimpiadasException(e);
+			throw new ProductosException(e);
 		}
 		return productos;
 	}
 	
-	public static Producto getProducto(String codigo) throws OlimpiadasException {
+	/**
+	 * Este método devuelve un producto específico de la base de datos.
+	 * @param codigo el código del producto a recuperar
+	 * @return un objeto Producto si se encuentra el producto, null en caso contrario
+	 * @throws ProductosException si ocurre un error al recuperar el producto
+	 */
+	public static Producto getProducto(String codigo) throws ProductosException {
 		if (codigo != null && !StringUtils.isBlank(codigo)) {
 			String sql = "SELECT * FROM " + TABLA + " WHERE codigo = ?";
 			try(Connection con = getConexion()) {
@@ -51,13 +71,19 @@ public class DAOProducto extends DAOBase {
 					return mapProducto(rs);
 				}
 			} catch (SQLException e) {
-				throw new OlimpiadasException(e);
+				throw new ProductosException(e);
 			}
 		}
 		return null;
 	}
 	
-	public static void anadirProducto(Producto producto) throws OlimpiadasException, SQLException {
+	/**
+	 * Este método añade un nuevo producto a la base de datos.
+	 * @param producto el producto a añadir
+	 * @throws ProductosException si ocurre un error al añadir el producto
+	 * @throws SQLException si ocurre un error al acceder a la base de datos
+	 */
+	public static void anadirProducto(Producto producto) throws ProductosException, SQLException {
 		if (producto != null) {
 			
 			String sql = "INSERT INTO " + TABLA + " ("
@@ -86,16 +112,22 @@ public class DAOProducto extends DAOBase {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				con.rollback();
-				throw new OlimpiadasException(e);
+				throw new ProductosException(e);
 			} finally {
 				con.close();
 			}			
 		} else {			
-			throw new OlimpiadasException("Los datos introducidos están incompletos");
+			throw new ProductosException("Los datos introducidos están incompletos");
 		}
 	}
 	
-	public static void modificarProducto(Producto producto) throws OlimpiadasException, SQLException {
+	/**
+	 * Este método modifica un producto existente en la base de datos.
+	 * @param producto el producto a modificar
+	 * @throws ProductosException si ocurre un error al modificar el producto
+	 * @throws SQLException si ocurre un error al acceder a la base de datos
+	 */
+	public static void modificarProducto(Producto producto) throws ProductosException, SQLException {
 		if (producto != null && !StringUtils.isBlank(producto.getCodigo())) {
 			
 			String sql = "UPDATE " + TABLA +" SET "
@@ -123,16 +155,22 @@ public class DAOProducto extends DAOBase {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				con.rollback();
-				throw new OlimpiadasException(e);
+				throw new ProductosException(e);
 			} finally {
 				con.close();
 			}			
 		} else {			
-			throw new OlimpiadasException("Los datos introducidos están incompletos");
+			throw new ProductosException("Los datos introducidos están incompletos");
 		}
 	}
 	
-	public static void borrarProducto(Producto producto) throws SQLException, OlimpiadasException {
+	/**
+	 * Este método elimina un producto de la base de datos.
+	 * @param producto el producto a eliminar
+	 * @throws SQLException si ocurre un error al acceder a la base de datos
+	 * @throws ProductosException si ocurre un error al eliminar el producto
+	 */
+	public static void borrarProducto(Producto producto) throws SQLException, ProductosException {
 		if (producto != null && !StringUtils.isBlank(producto.getCodigo())) {			
 			String sql = "DELETE FROM " + TABLA +" WHERE codigo = ?";
 			Connection con = null;
@@ -145,7 +183,7 @@ public class DAOProducto extends DAOBase {
 				con.commit();
 			} catch (SQLException e) {
 				con.rollback();
-				throw new OlimpiadasException(e);
+				throw new ProductosException(e);
 			} finally {
 				con.close();
 			}

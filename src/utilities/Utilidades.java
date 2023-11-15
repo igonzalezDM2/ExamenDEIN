@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import excepciones.OlimpiadasException;
+import excepciones.ProductosException;
 import javafx.event.Event;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -44,15 +44,15 @@ public class Utilidades {
 	 * 
 	 * @param str cadena a convertir
 	 * @return valor double convertido
-	 * @throws OlimpiadasException si la cadena no tiene un formato decimal válido
+	 * @throws ProductosException si la cadena no tiene un formato decimal válido
 	 */
-	public static double parseDouble(String str) throws OlimpiadasException {
+	public static double parseDouble(String str) throws ProductosException {
 		if (str != null && !str.isBlank()) {
 			try {
 				return Double.parseDouble(str.replace(',', '.'));
 			} catch (NumberFormatException e) {/*QUE SALTE A LA EXCEPCIÓN*/}
 		}
-		throw new OlimpiadasException("Formato de número decimal incorrecto");
+		throw new ProductosException("Formato de número decimal incorrecto");
 	}
 	
 	/**
@@ -60,15 +60,15 @@ public class Utilidades {
 	 * 
 	 * @param str cadena a convertir
 	 * @return valor int convertido
-	 * @throws OlimpiadasException si la cadena no tiene un formato entero válido
+	 * @throws ProductosException si la cadena no tiene un formato entero válido
 	 */
-	public static int parseInt(String str) throws OlimpiadasException {
+	public static int parseInt(String str) throws ProductosException {
 		if (str != null && !str.isBlank()) {
 			try {
 				return Integer.parseInt(str);
 			} catch (NumberFormatException e) {/*QUE SALTE A LA EXCEPCIÓN*/}
 		}
-		throw new OlimpiadasException("Formato de número entero incorrecto");
+		throw new ProductosException("Formato de número entero incorrecto");
 	}
 	
 	/**
@@ -131,14 +131,14 @@ public class Utilidades {
 	 * 
 	 * @param bytes array de bytes a convertir
 	 * @return imagen convertida
-	 * @throws OlimpiadasException si ocurre un error al convertir el array de bytes en imagen
+	 * @throws ProductosException si ocurre un error al convertir el array de bytes en imagen
 	 */
-	public static Image byte2Image(byte[] bytes) throws OlimpiadasException {
+	public static Image byte2Image(byte[] bytes) throws ProductosException {
 		if (bytes != null) {
 			try (InputStream is = new ByteArrayInputStream(bytes)) {				
 				return new Image(is);
 			} catch (IOException e) {
-				throw new OlimpiadasException(e);
+				throw new ProductosException(e);
 			}
 		}
 		return null;
@@ -148,14 +148,14 @@ public class Utilidades {
 	 * Verifica que el contenido de un TextField sea un número decimal válido.
 	 * 
 	 * @param tf TextField a verificar
-	 * @throws OlimpiadasException si el contenido del TextField no es un número decimal válido
+	 * @throws ProductosException si el contenido del TextField no es un número decimal válido
 	 */
-	public static void checkCampoDouble(TextField tf) throws OlimpiadasException {
+	public static void checkCampoDouble(TextField tf) throws ProductosException {
 		String strNum = tf.getText();
 		Pattern doublePattern = Pattern.compile("\\d+([\\.,]\\d+)?");
 		Matcher matcher = doublePattern.matcher(strNum);
 		if (!matcher.matches()) {
-			throw new OlimpiadasException("El campo " + tf.getId() + " contiene un formato incorrecto o está vacío");
+			throw new ProductosException("El campo " + tf.getId() + " contiene un formato incorrecto o está vacío");
 		}
 	}
 
@@ -173,14 +173,14 @@ public class Utilidades {
 	 * Verifica que el contenido de un TextField sea un número entero válido.
 	 * 
 	 * @param tf TextField a verificar
-	 * @throws OlimpiadasException si el contenido del TextField no es un número entero válido
+	 * @throws ProductosException si el contenido del TextField no es un número entero válido
 	 */
-	public static void checkCampoInt(TextField tf) throws OlimpiadasException {
+	public static void checkCampoInt(TextField tf) throws ProductosException {
 		String strNum = tf.getText();
 		Pattern intPattern = Pattern.compile("\\d+");
 		Matcher matcher = intPattern.matcher(strNum);
 		if (!matcher.matches()) {
-			throw new OlimpiadasException("El campo " + tf.getId() + " contiene un formato incorrecto o está vacío");
+			throw new ProductosException("El campo " + tf.getId() + " contiene un formato incorrecto o está vacío");
 		}
 	}
 
@@ -188,12 +188,12 @@ public class Utilidades {
 	 * Verifica que el contenido de un TextField no sea nulo ni vacío.
 	 * 
 	 * @param tf TextField a verificar
-	 * @throws OlimpiadasException si el contenido del TextField es nulo o vacío
+	 * @throws ProductosException si el contenido del TextField es nulo o vacío
 	 */
-	public static void checkCampoStrNotNull(TextField tf) throws OlimpiadasException {
+	public static void checkCampoStrNotNull(TextField tf) throws ProductosException {
 		String str = tf.getText();
 		if (str == null || str.isBlank()) {
-			throw new OlimpiadasException("El campo" + tf.getId() + " está vacío");
+			throw new ProductosException("El campo" + tf.getId() + " está vacío");
 		}
 	}
 	
@@ -210,13 +210,13 @@ public class Utilidades {
 	 * Comprueba que no sobrepase un máximo de caracteres; no salta excepción si es nulo o vacío
 	 * @param tf
 	 * @param maxLength
-	 * @throws OlimpiadasException
+	 * @throws ProductosException
 	 */
-	public static void checkCampoStrMaxLength(TextField tf, int maxLength) throws OlimpiadasException {
+	public static void checkCampoStrMaxLength(TextField tf, int maxLength) throws ProductosException {
 		String str = tf.getText();
 		if (str != null && !str.isBlank()) {
 			if (tf.getText().length() > maxLength) {
-				throw new OlimpiadasException("El campo" + tf.getId() + " está tiene más de " + maxLength + " caracteres");
+				throw new ProductosException("El campo" + tf.getId() + " está tiene más de " + maxLength + " caracteres");
 			}
 		}
 	}
@@ -235,13 +235,13 @@ public class Utilidades {
 	 * Comprueba que alcanza un mínimo de caracteres; no salta excepción si es nulo o vacío
 	 * @param tf
 	 * @param maxLength
-	 * @throws OlimpiadasException
+	 * @throws ProductosException
 	 */
-	public static void checkCampoStrMinLength(TextField tf, int minLength) throws OlimpiadasException {
+	public static void checkCampoStrMinLength(TextField tf, int minLength) throws ProductosException {
 		String str = tf.getText();
 		if (str != null && !str.isBlank()) {
 			if (tf.getText().length() < minLength) {
-				throw new OlimpiadasException("El campo" + tf.getId() + " está tiene más de " + minLength + " caracteres");
+				throw new ProductosException("El campo" + tf.getId() + " está tiene más de " + minLength + " caracteres");
 			}
 		}
 	}
@@ -342,6 +342,12 @@ public class Utilidades {
 	
 	
 	
+    /**
+     * Abre un cuadro de diálogo para seleccionar una imagen.
+     *
+     * @param ventana la ventana padre del cuadro de diálogo
+     * @return un arreglo de bytes que representa la imagen seleccionada, o null si no se seleccionó ninguna imagen
+     */
     public static byte[] abrirFileChooserImagen(Window ventana) {
     	FileChooser fc = new FileChooser();
     	fc.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -359,10 +365,25 @@ public class Utilidades {
 	
     
     
+    /**
+     * Muestra una imagen con un ancho y alto personalizados.
+     *
+     * @param imagen el arreglo de bytes que representa la imagen
+     * @param width el ancho deseado para la imagen
+     * @param height el alto deseado para la imagen
+     */
     public static void mostrarImagen(byte[] imagen, int width, int height) {
     	mostrarImagen(imagen, width, height, null);
     }
     
+    /**
+     * Muestra una imagen con un ancho y alto personalizados.
+     *
+     * @param imagen el arreglo de bytes que representa la imagen
+     * @param width el ancho deseado para la imagen
+     * @param height el alto deseado para la imagen
+     * @param titulo el título de la ventana
+     */
     public static void mostrarImagen(byte[] imagen, int width, int height, String titulo) {
     	
     	int defaultWidth = 400;
@@ -393,7 +414,7 @@ public class Utilidades {
 				Scene scene = new Scene(imgRoot,defWidth,defHeight);
 				stage.setScene(scene);
 				stage.show();
-			} catch (OlimpiadasException e) {
+			} catch (ProductosException e) {
 				lanzarError(e);
 			}
     				

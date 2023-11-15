@@ -3,14 +3,14 @@ package excepciones;
 /**
  * Excepción personalizada para los errores relacionados con los animales.
  */
-public class OlimpiadasException extends Exception {
+public class ProductosException extends Exception {
 
 	private static final long serialVersionUID = 9075095558068192043L;
 
 	/**
 	 * Constructor vacío de la excepción.
 	 */
-	public OlimpiadasException() {
+	public ProductosException() {
 		super();
 	}
 
@@ -22,7 +22,7 @@ public class OlimpiadasException extends Exception {
 	 * @param enableSuppression indica si la supresión está habilitada o no
 	 * @param writableStackTrace indica si el seguimiento de pila se puede escribir o no
 	 */
-	public OlimpiadasException(String message, Throwable cause, boolean enableSuppression,
+	public ProductosException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
@@ -33,7 +33,7 @@ public class OlimpiadasException extends Exception {
 	 * @param message el mensaje de la excepción
 	 * @param cause la causa de la excepción
 	 */
-	public OlimpiadasException(String message, Throwable cause) {
+	public ProductosException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
@@ -42,7 +42,7 @@ public class OlimpiadasException extends Exception {
 	 * 
 	 * @param message el mensaje de la excepción
 	 */
-	public OlimpiadasException(String message) {
+	public ProductosException(String message) {
 		super(message);
 	}
 
@@ -51,7 +51,7 @@ public class OlimpiadasException extends Exception {
 	 * 
 	 * @param cause la causa de la excepción
 	 */
-	public OlimpiadasException(Throwable cause) {
+	public ProductosException(Throwable cause) {
 		super(cause);
 	}
 	
